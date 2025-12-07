@@ -1,4 +1,4 @@
-# 🚀 Mohamed’s Mac Terminal Setup (2025)
+# 🚀 My Terminal Setup (2025)
 
 This document contains all steps to recreate my complete Mac terminal environment.  
 It includes Zsh configuration, plugins, fonts, fzf, Starship (Pure preset), and essential CLI tools.
