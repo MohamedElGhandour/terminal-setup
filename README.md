@@ -1,7 +1,32 @@
 # 🚀 My Terminal Setup (2025)
 
-This document contains all steps to recreate my complete Mac terminal environment.  
-It includes Zsh configuration, plugins, fonts, fzf, Starship (Pure preset), and essential CLI tools.
+A complete guide to reconstructing my macOS terminal environment from scratch.
+This setup includes:
+
+- Zsh configuration
+- Plugins & enhancements
+- Fonts with icons
+- FZF fuzzy finder
+- Starship prompt (Pure preset)
+- Essential CLI tools
+
+Optimized for speed, clarity, and minimal configuration.
+
+---
+
+# 📚 Table of Contents
+
+1. Install Homebrew
+2. Install CLI Tools
+3. Configure & Install NVM + Node
+4. Install Zsh Plugins
+5. Install Starship Prompt
+6. Enable FZF Integrations
+7. Install Nerd Font
+8. Final .zshrc
+9. Keyboard Shortcuts
+10. Common Commands
+11. How to Restore on a New Mac
 
 ---
 
@@ -19,17 +44,19 @@ It includes Zsh configuration, plugins, fonts, fzf, Starship (Pure preset), and 
 brew install git wget tree fzf jq bat eza ripgrep nvm
 ```
 
-### Tools included:
+### Included tools
 
-- **git** → version control
-- **wget** → downloads
-- **tree** → directory tree
-- **fzf** → fuzzy search (Ctrl + R, Alt + C, Ctrl + T)
-- **jq** → JSON formatter
-- **bat** → better cat
-- **eza** → modern ls with icons
-- **ripgrep (rg)** → super-fast text search
-- **nvm** → Node version manager
+| Tool    | Purpose              |
+| ------- | -------------------- |
+| git     | version control      |
+| wget    | HTTP downloads       |
+| tree    | directory tree       |
+| fzf     | fuzzy search         |
+| jq      | JSON parser          |
+| bat     | pretty cat           |
+| eza     | modern ls            |
+| ripgrep | fast search          |
+| nvm     | Node version manager |
 
 ---
 
@@ -78,7 +105,7 @@ starship preset pure-preset -o ~/.config/starship.toml
 $(brew --prefix)/opt/fzf/install
 ```
 
-Select **YES** for:
+Enable:
 
 - auto-completion
 - key bindings
@@ -86,21 +113,19 @@ Select **YES** for:
 
 ---
 
-## 7. Install Nerd Font (required for icons)
+## 7. Install Nerd Font
 
 ```bash
 brew install --cask font-meslo-lg-nerd-font
 ```
 
-Then set **MesloLGS Nerd Font** in your Terminal/iTerm2.
+Set MesloLGS Nerd Font in your terminal.
 
 ---
 
-## 8. Final `.zshrc` configuration
+## 8. Final .zshrc configuration
 
-_(clean, optimized, and ready to paste — includes all settings only once)_
-
-```zsh
+```bash
 # =========================
 # NVM (Node Version Manager)
 # =========================
@@ -193,21 +218,21 @@ bindkey '^[[B' history-beginning-search-forward    # Down arrow
 
 ### Navigation
 
-- `Ctrl + A` → start of line
-- `Ctrl + E` → end of line
-- `Ctrl + L` → clear screen
-- `Alt + ← / →` → move word
+- Ctrl + A → start of line
+- Ctrl + E → end of line
+- Ctrl + L → clear screen
+- Alt + ← / → → move by word
 
 ### History
 
-- Prefix + ↑ → cycle history with same start
-- `Ctrl + R` → fuzzy full-history search
+- Prefix + ↑ → search history
+- Ctrl + R → fuzzy history
 
 ### FZF
 
-- `Ctrl + R` → fuzzy history
-- `Ctrl + T` → fuzzy file picker
-- `Alt + C` → fuzzy directory jump
+- Ctrl + R → fuzzy history
+- Ctrl + T → fuzzy file picker
+- Alt + C → fuzzy cd
 
 ---
 
@@ -216,27 +241,23 @@ bindkey '^[[B' history-beginning-search-forward    # Down arrow
 ```bash
 eza             # better ls
 eza -l          # long list
-eza -T          # tree-like list
+eza -T          # tree view
 bat file        # pretty cat
-rg "text"       # search text in folder
-tree -L 2       # depth-limited tree
+rg "text"       # search text fast
+tree -L 2       # tree depth 2
 ```
 
 ---
 
 ## 11. Restore everything later
 
-To rebuild your terminal on a new Mac:
-
 1. Install Homebrew
 2. Install CLI tools
 3. Install fonts
-4. Copy `.zshrc`
-5. Copy `~/.config/starship.toml`
-6. Run fzf installer
-
-Your environment will be identical.
+4. Copy .zshrc
+5. Copy starship.toml
+6. Run FZF installer
 
 ---
 
-# 🎉 End of Terminal Setup
+# 🎉 Setup Complete
