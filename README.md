@@ -21,15 +21,15 @@ brew install git wget tree fzf jq bat eza ripgrep nvm
 
 ### Tools included:
 
-- **git** → version control  
-- **wget** → downloads  
-- **tree** → directory tree  
-- **fzf** → fuzzy search (Ctrl + R, Alt + C, Ctrl + T)  
-- **jq** → JSON formatter  
-- **bat** → better cat  
-- **eza** → modern ls with icons  
-- **ripgrep (rg)** → super-fast text search  
-- **nvm** → Node version manager  
+- **git** → version control
+- **wget** → downloads
+- **tree** → directory tree
+- **fzf** → fuzzy search (Ctrl + R, Alt + C, Ctrl + T)
+- **jq** → JSON formatter
+- **bat** → better cat
+- **eza** → modern ls with icons
+- **ripgrep (rg)** → super-fast text search
+- **nvm** → Node version manager
 
 ---
 
@@ -80,9 +80,9 @@ $(brew --prefix)/opt/fzf/install
 
 Select **YES** for:
 
-- auto-completion  
-- key bindings  
-- shell integration  
+- auto-completion
+- key bindings
+- shell integration
 
 ---
 
@@ -96,8 +96,9 @@ Then set **MesloLGS Nerd Font** in your Terminal/iTerm2.
 
 ---
 
-## 8. Final `.zshrc` configuration  
-*(clean, optimized, and ready to paste — includes all settings only once)*
+## 8. Final `.zshrc` configuration
+
+_(clean, optimized, and ready to paste — includes all settings only once)_
 
 ```zsh
 # =========================
@@ -113,10 +114,10 @@ HISTFILE=~/.zsh_history
 HISTSIZE=5000
 SAVEHIST=5000
 
-setopt INC_APPEND_HISTORY      # save commands as they're entered
+setopt INC_APPEND_HISTORY      # save history as commands are entered
 setopt SHARE_HISTORY           # share history across terminals
 setopt HIST_IGNORE_ALL_DUPS    # don't store duplicate commands
-setopt HIST_REDUCE_BLANKS      # trim unnecessary spaces
+setopt HIST_REDUCE_BLANKS      # trim extra spaces
 
 # =========================
 # Git aliases
@@ -134,9 +135,9 @@ alias gl="git log --oneline --graph --decorate"
 alias ls="eza --icons --group-directories-first"
 
 # =========================
-# Plugins
+# Zsh plugins (lightweight)
 # =========================
-# Autosuggestions
+# Autosuggestions from history (ghost text)
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Syntax highlighting (must be last plugin)
@@ -151,30 +152,34 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "$(starship init zsh)"
 
 # =========================
-# History prefix search (↑/↓ match prefix)
+# History prefix search with arrows
+# Type a prefix, then use ↑ / ↓ to cycle matching history
 # =========================
-bindkey '^[[A' history-beginning-search-backward
-bindkey '^[[B' history-beginning-search-forward
+bindkey '^[[A' history-beginning-search-backward   # Up arrow
+bindkey '^[[B' history-beginning-search-forward    # Down arrow
 ```
 
 ---
 
 ## 9. Useful keyboard shortcuts
 
-### Navigation  
-- `Ctrl + A` → start of line  
-- `Ctrl + E` → end of line  
-- `Ctrl + L` → clear screen  
-- `Alt + ← / →` → move word  
+### Navigation
 
-### History  
-- Prefix + ↑ → cycle history with same start  
-- `Ctrl + R` → fuzzy full-history search  
+- `Ctrl + A` → start of line
+- `Ctrl + E` → end of line
+- `Ctrl + L` → clear screen
+- `Alt + ← / →` → move word
 
-### FZF  
-- `Ctrl + R` → fuzzy history  
-- `Ctrl + T` → fuzzy file picker  
-- `Alt + C` → fuzzy directory jump  
+### History
+
+- Prefix + ↑ → cycle history with same start
+- `Ctrl + R` → fuzzy full-history search
+
+### FZF
+
+- `Ctrl + R` → fuzzy history
+- `Ctrl + T` → fuzzy file picker
+- `Alt + C` → fuzzy directory jump
 
 ---
 
@@ -195,12 +200,12 @@ tree -L 2       # depth-limited tree
 
 To rebuild your terminal on a new Mac:
 
-1. Install Homebrew  
-2. Install CLI tools  
-3. Install fonts  
-4. Copy `.zshrc`  
-5. Copy `~/.config/starship.toml`  
-6. Run fzf installer  
+1. Install Homebrew
+2. Install CLI tools
+3. Install fonts
+4. Copy `.zshrc`
+5. Copy `~/.config/starship.toml`
+6. Run fzf installer
 
 Your environment will be identical.
 
