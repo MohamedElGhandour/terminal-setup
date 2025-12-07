@@ -107,6 +107,33 @@ _(clean, optimized, and ready to paste — includes all settings only once)_
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"
 
+# Auto-switch Node version based on .nvmrc
+autoload -U add-zsh-hook
+
+load-nvmrc() {
+  local node_version nvmrc_path
+  nvmrc_path=$(nvm_find_nvmrc)
+
+  if [ -n "$nvmrc_path" ]; then
+    # There is an .nvmrc somewhere above or in this folder
+    node_version=$(cat "$nvmrc_path")
+
+    if [ "$node_version" = "system" ]; then
+      nvm use system >/dev/null
+    elif [ "$(nvm current)" != "$node_version" ]; then
+      nvm use "$node_version" >/dev/null
+    fi
+  else
+    # No .nvmrc in this directory tree → go back to default
+    if [ "$(nvm current)" != "default" ]; then
+      nvm use default >/dev/null
+    fi
+  fi
+}
+
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
 # =========================
 # History settings
 # =========================
@@ -157,6 +184,7 @@ eval "$(starship init zsh)"
 # =========================
 bindkey '^[[A' history-beginning-search-backward   # Up arrow
 bindkey '^[[B' history-beginning-search-forward    # Down arrow
+
 ```
 
 ---
