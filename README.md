@@ -1,4 +1,4 @@
-# 🚀 My Terminal Setup (2025)
+# 🚀 My Terminal Setup (2026)
 
 A complete guide to reconstructing my macOS terminal environment from scratch.
 This setup includes:
