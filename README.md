@@ -127,6 +127,13 @@ Set MesloLGS Nerd Font in your terminal.
 
 ```bash
 # =========================
+# Completion (needed for Tab features like git branches)
+# =========================
+fpath+=("$(brew --prefix)/share/zsh/site-functions")
+autoload -Uz compinit
+compinit -C
+
+# =========================
 # NVM (Node Version Manager)
 # =========================
 export NVM_DIR="$HOME/.nvm"
@@ -172,36 +179,50 @@ setopt HIST_IGNORE_ALL_DUPS    # don't store duplicate commands
 setopt HIST_REDUCE_BLANKS      # trim extra spaces
 
 # =========================
-# Git aliases
+# Git aliases (+ branch completion)
 # =========================
-alias gco="git checkout"
+alias gco="git checkout"        # legacy (still useful sometimes)
+alias gsw="git switch"          # modern branch switching
 alias gcm="git commit -m"
 alias gaa="git add ."
 alias gs="git status -sb"
 alias gp="git push"
 alias gl="git log --oneline --graph --decorate"
 
+# Make alias completion behave like the real git subcommands
+compdef gco=git-checkout 2>/dev/null || compdef gco=git
+compdef gsw=git-switch   2>/dev/null || compdef gsw=git
+
 # =========================
 # General aliases
 # =========================
+
+# Replace the default `ls` with `eza` (a modern `ls` alternative).
+# --icons: shows file/folder icons (needs a Nerd Font in your terminal)
+# --group-directories-first: lists folders before files
 alias ls="eza --icons --group-directories-first"
 
 # =========================
-# Zsh plugins (lightweight)
+# FZF integration
 # =========================
+
+# If the FZF Zsh integration file exists, load it.
+# This enables FZF key bindings + shell integration, typically:
+# - Ctrl + R : fuzzy search your command history
+# - Ctrl + T : fuzzy pick files/paths from the current directory
+# - Alt + C  : fuzzy jump (cd) into a directory
+# The check prevents errors if ~/.fzf.zsh doesn't exist.
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# =========================
+# Zsh plugins (Homebrew)
+# =========================
+
 # Autosuggestions from history (ghost text)
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Syntax highlighting (must be last plugin)
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# fzf integration
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# =========================
-# Starship prompt
-# =========================
-eval "$(starship init zsh)"
 
 # =========================
 # History prefix search with arrows
@@ -209,6 +230,11 @@ eval "$(starship init zsh)"
 # =========================
 bindkey '^[[A' history-beginning-search-backward   # Up arrow
 bindkey '^[[B' history-beginning-search-forward    # Down arrow
+
+# =========================
+# Starship prompt (keep near the end)
+# =========================
+eval "$(starship init zsh)"
 
 ```
 
