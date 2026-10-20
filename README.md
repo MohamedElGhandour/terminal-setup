@@ -133,7 +133,7 @@ cp zsh/.zshrc ~/.zshrc
 source ~/.zshrc
 ```
 
-The block below walks through the same setup part by part. It is not identical: it also has an `.nvmrc` auto-switch for Node, while the file has a few more git aliases (`gpl`, `gpm`, `gad`, `gaa` = `git add -A`), a git cheat sheet in comments, and the WebStorm command-line launcher on `PATH`.
+It is the same as the block below.
 
 ```bash
 # =========================
