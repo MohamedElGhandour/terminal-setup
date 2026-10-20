@@ -27,6 +27,7 @@ Optimized for speed, clarity, and minimal configuration.
 9. Keyboard Shortcuts
 10. Common Commands
 11. How to Restore on a New Mac
+12. Queue Heavy Commit Checks (Husky)
 
 ---
 
@@ -283,6 +284,28 @@ tree -L 2       # tree depth 2
 4. Copy .zshrc
 5. Copy starship.toml
 6. Run FZF installer
+7. Copy `husky/init.sh` to `~/.config/husky/init.sh`
+
+---
+
+## 12. Queue heavy commit checks (Husky)
+
+[`husky/init.sh`](husky/init.sh) is a personal Husky 9 hook file: Husky runs it before every git hook, in every repository on this Mac. It only acts in `citiesapps/web`.
+
+When several AI sessions (each in its own worktree) commit at the same time, some commits run the complete unit tests, and those runs used to pile up and fill the RAM. With this file:
+
+- those heavy test runs take turns: a commit waits while another worktree runs them, and prints who it is waiting for
+- the projects of one commit run one after another (`NX_PARALLEL=1`)
+- normal commits never wait, and a crashed session never blocks the queue
+
+Install:
+
+```bash
+mkdir -p ~/.config/husky
+cp husky/init.sh ~/.config/husky/init.sh
+```
+
+Remove it again with `rm ~/.config/husky/init.sh`.
 
 ---
 
