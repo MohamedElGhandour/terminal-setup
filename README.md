@@ -126,6 +126,15 @@ Set MesloLGS Nerd Font in your terminal.
 
 ## 8. Final .zshrc configuration
 
+My exact, current file is [`zsh/.zshrc`](zsh/.zshrc). Install it with:
+
+```bash
+cp zsh/.zshrc ~/.zshrc
+source ~/.zshrc
+```
+
+The block below walks through the same setup part by part. It is not identical: it also has an `.nvmrc` auto-switch for Node, while the file has a few more git aliases (`gpl`, `gpm`, `gad`, `gaa` = `git add -A`), a git cheat sheet in comments, and the WebStorm command-line launcher on `PATH`.
+
 ```bash
 # =========================
 # Completion (needed for Tab features like git branches)
@@ -281,7 +290,7 @@ tree -L 2       # tree depth 2
 1. Install Homebrew
 2. Install CLI tools
 3. Install fonts
-4. Copy .zshrc
+4. Copy `zsh/.zshrc` to `~/.zshrc`
 5. Copy starship.toml
 6. Run FZF installer
 7. Copy `husky/init.sh` to `~/.config/husky/init.sh`
