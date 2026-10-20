@@ -290,22 +290,65 @@ tree -L 2       # tree depth 2
 
 ## 12. Queue heavy commit checks (Husky)
 
-[`husky/init.sh`](husky/init.sh) is a personal Husky 9 hook file: Husky runs it before every git hook, in every repository on this Mac. It only acts in `citiesapps/web`.
+### What is this?
 
-When several AI sessions (each in its own worktree) commit at the same time, some commits run the complete unit tests, and those runs used to pile up and fill the RAM. With this file:
+**Husky** is a tool the `citiesapps/web` project uses to run checks every time a git commit is made: formatting, lint and unit tests. If a check fails, the commit is refused.
 
-- those heavy test runs take turns: a commit waits while another worktree runs them, and prints who it is waiting for
-- the projects of one commit run one after another (`NX_PARALLEL=1`)
-- normal commits never wait, and a crashed session never blocks the queue
+Husky also lets each developer add a **personal** script that runs right before those checks: `~/.config/husky/init.sh`. It lives only on your own Mac, it is not part of any project, and nobody else gets it. [`husky/init.sh`](husky/init.sh) in this repo is my copy of that file.
 
-Install:
+### Why do I need it?
+
+Most commits only run the few tests linked to the changed files, which takes seconds. Some files can't be linked to specific tests: lint rules, design-token styles, test settings, deleted files. For those, the commit check runs **all** unit tests of the affected apps, which keeps about a dozen test processes busy.
+
+I often run several AI sessions at once (Claude, Codex), each in its own worktree (a separate folder of the same repository). When two of them made such a commit at the same time, both big test runs went side by side. On 2026-10-20 that used 46 test processes and 6 to 8.6 GB of RAM for more than an hour.
+
+### What it does
+
+Only in `citiesapps/web`, and only for those heavy commits:
+
+1. **Take turns.** If another worktree is already running its big tests, the commit waits and prints who it is waiting for:
+
+   ```
+   Waiting for the full unit suites another worktree is running (pid 12345, /path/to/that/worktree).
+   ```
+
+   It starts as soon as the other one is done. Don't cancel a commit that shows this line; it is waiting, not stuck.
+
+2. **One app at a time.** The apps of one commit are tested one after another (`NX_PARALLEL=1`) instead of up to eight at once.
+
+```
+Before:  Session A  big tests ████████████
+         Session B  big tests ████████████              both at once, double memory
+
+After:   Session A  big tests ████████████
+         Session B  waits...               ████████████  one at a time
+```
+
+Everything else stays the same: normal commits never wait, other repositories are ignored, and teammates are not affected.
+
+### How it works
+
+- It asks the project's own commit-check code (`scripts/husky/unit-test-args.mjs`) whether this commit needs the full tests, so it always agrees with the real check.
+- The "turn" is a small lock file, `commit-gate-unit-suites.lock`, in the repository's shared `.git` folder. All worktrees of one clone use that same folder, so all sessions share one queue.
+- The lock file holds the process id of the commit that has the turn. If that process is gone (a crashed or killed session), the next commit removes the lock and goes ahead, so the queue never gets stuck.
+- The lock is removed when the commit check finishes, whether the check passes or fails.
+
+### Install
 
 ```bash
 mkdir -p ~/.config/husky
 cp husky/init.sh ~/.config/husky/init.sh
 ```
 
-Remove it again with `rm ~/.config/husky/init.sh`.
+### Check or remove
+
+```bash
+# Inside any citiesapps/web worktree: who has the turn right now (no file = nobody)
+cat "$(git rev-parse --path-format=absolute --git-common-dir)/commit-gate-unit-suites.lock"
+
+# Remove it
+rm ~/.config/husky/init.sh
+```
 
 ---
 
